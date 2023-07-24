@@ -1,6 +1,6 @@
 {
   "name": "npm-shortidx",
-  "version": "1.0.11",
+  "version": "1.0.16",
   "description": "Generador de Id aleatorios, Random Id Generator",
   "main": "src/index.js",
   "scripts": {
@@ -31,6 +31,5 @@
   },
   "bugs": {
     "url": "https://github.com/perch33/shortIdx/issues"
-  },
-  "devDependencies": {}
+  }
 }

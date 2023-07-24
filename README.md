@@ -13,13 +13,13 @@ los caracteres usados son los siguientes
 Recuerda llamarlo como una función por ejemplo:
 
 ```
-import { shortIdx } from "npm-shortidx";
+import { ShortIdx } from "npm-shortidx";
 
 function App() {
 
   return (
     <>
-        <p>{shortIdx()}</p>
+        <p>{ShortIdx()}</p>
     </>
   );
 }
@@ -42,7 +42,7 @@ function App() {
 
   return (
     <>
-        <p>{shortIdx()}</p>
+        <p>{ShortIdx()}</p>
 
         {letter.map((letra) => {
           return <p key={shortIdx()}>{letra}</p>;
