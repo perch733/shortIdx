@@ -1,0 +1,32 @@
+{
+  "name": "npm-shortidx",
+  "version": "1.0.11",
+  "description": "Generador de Id aleatorios, Random Id Generator",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "short",
+    "tiny",
+    "id",
+    "uuid",
+    "bitly",
+    "shorten",
+    "mongoid",
+    "shortid",
+    "tinyid",
+    "react",
+    "shuffleId"
+  ],
+  "author": "Percy Chuzon <contacto@percychuzon.com>",
+  "license": "ISC",
+  "homepage": "https://github.com/perch33/shortIdx",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/perch33/shortIdx"
+  },
+  "dependencies": {
+    "user": "^0.0.0"
+  }
+}
