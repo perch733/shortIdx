@@ -24,9 +24,13 @@
   "homepage": "https://github.com/perch33/shortIdx",
   "repository": {
     "type": "git",
-    "url": "https://github.com/perch33/shortIdx"
+    "url": "git+https://github.com/perch33/shortIdx.git"
   },
   "dependencies": {
     "user": "^0.0.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/perch33/shortIdx/issues"
+  },
+  "devDependencies": {}
 }
