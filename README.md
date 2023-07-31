@@ -1,16 +1,24 @@
 # npm-shortidx
 
-Es una librería que genera id de manera aleatoria hecha en javascript, por defecto su longitud es de 9.
+## Métodos / methods
+```
+ShortIdx() , RandomIdx()
+```
 
-los caracteres usados son los siguientes
+## ShortIdx()
+
+Es una librería que genera id de manera aleatoria hecha en javascript, por defecto su longitud es de 9. / It is a library that generates id randomly made in javascript, by default its length is 9.
+
+los caracteres usados son los siguientes / the characters used are the following
 
 ```
 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_
 ```
 
-## Como usar
+## Cómo usarlo / how to use it
 
 Recuerda llamarlo como una función por ejemplo:
+Remember to call it as a function for example:
 
 ```
 import { ShortIdx } from "npm-shortidx";
@@ -27,11 +35,11 @@ function App() {
 export default App;
 ```
 
-expectativa
+expectativas / expectations
 
 - &#8220;wkezyUxsW&#8221;
 
-util para las key en react
+útil para las key en react / useful for keys in react
 
 ```
 import { shortIdx } from "npm-shortidx";
@@ -54,7 +62,7 @@ function App() {
 export default App;
 ```
 
-expectativa
+expectativas / expectations
 
 ```
 WcuorI6_x
@@ -68,7 +76,7 @@ c
 d
 ```
 
-## Cambiando los parámetros de longitud
+## Cambiando los parámetros de longitud / Changing the length parameters
 
 ```
 import { shortIdx } from "npm-shortidx";
@@ -85,7 +93,7 @@ function App() {
 export default App;
 ```
 
-expectativa
+expectativas / expectations
 
 - &#8220;sd9muNQYowxenSR&#8221;
 - &#8220;JKGeDvQ52NX-SME&#8221;
@@ -93,3 +101,69 @@ expectativa
 - &#8220;Pb87VDoEXHuwaBS&#8221;
 - &#8220;XDRolWGwbhuLcfd&#8221;
 - &#8220;cqvtu_p1ZieDBVK&#8221;
+
+## RandomIdx()
+
+Genera id de manera aleatoria hecha en javascript, por defecto su longitud es de 94. / Generate id randomly made in javascript, by default its length is 94.
+
+los caracteres usados son los siguientes / the characters used are the following
+
+```
+0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_!#$%&'()*+,-./:;<=>?@[]^_`{|}~
+```
+
+## Cómo usarlo / how to use it
+
+De manera muy similar a la función anterior:
+Much like the previous function:
+
+```
+import { RandomIdx } from "npm-shortidx";
+
+function App() {
+
+  return (
+    <>
+        <p>{RandomIdx())}</p>
+    </>
+  );
+}
+
+export default App;
+```
+
+expectativas / expectations
+
+- <tU!xQNK|Y8;
+- 8Z-@vkXcopYr7VI
+- N?[-1oxuhT-cIpz
+
+No se recomienda para su uso como generador de contraseñas, podrían no ser seguras / Not recommended for use as a password generator, they may not be secure
+
+expectativas / expectations
+
+```
+Dz(6|H*_:n?V~Ak
+7#g_&1]:;=kN4mv
+~A<mOdaE_N]{Lj9
+Kw>Ifjy0@]E-.vQ
+b1W=DAVEzo[`-%;
+```
+
+## Cambiando los parámetros de longitud / Changing the length parameters
+
+Similar a la función anterior
+Similar to the previous function
+
+```
+RandomIdx(15)
+```
+
+expectativas / expectations
+
+- &#8220;;IRS+tUkWPp|Xor&#8221;
+- &#8220;c#HO,8XK-kPS=p_&#8221;
+- &#8220;#]EpmRnUrhk'uA:&#8221;
+- &#8220;QD9{uk+N*RY<0p(&#8221;
+- &#8220;-28z5*0hv%3<sfU&#8221;
+- &#8220;o_KjwAti@q%ZzBk&#8221;
