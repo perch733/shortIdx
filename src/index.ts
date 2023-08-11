@@ -1,41 +1,46 @@
 "use strict";
 
-interface RandomGenerator {
-  (limit: number): string;
+function ShuffleX(arrayX: any[], limit: number): any[] {
+  let ctr = arrayX.length;
+  let temp: any;
+  let index: number;
+
+  // While there are elements in the array
+  while (ctr > 0) {
+    // Pick a random index
+    index = Math.floor(Math.random() * ctr);
+    // Decrease ctr by 1
+    ctr--;
+    // And swap the last element with it
+    temp = arrayX[ctr];
+    arrayX[ctr] = arrayX[index];
+    arrayX[index] = temp;
+  }
+  return arrayX.slice(0, limit);
 }
 
-const ShortIdx: RandomGenerator = (limit = 9) => {
-  const character =
-    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
-  const myArray = Array.from(character);
-  let ctr = myArray.length;
-  let temp: string, index: number;
+function ShortIdx(limit: number = 7): string {
+  const character: string[] = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '-', '_' ];
 
-  while (ctr > 0) {
-    index = Math.floor(Math.random() * ctr);
-    ctr--;
-    temp = myArray[ctr];
-    myArray[ctr] = myArray[index];
-    myArray[index] = temp;
-  }
-  return myArray.join("").slice(0, limit).toString();
+  let shuffleArray = ShuffleX(character, limit);
+
+  let result = shuffleArray.join("").slice(0, limit);
+
+  return result;
+}
+
+function RandomIdx(limit: number = 7): string {
+  const character: string[] =[ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '-', '_', '!', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~' ];
+
+  let shuffleArray = ShuffleX(character, limit);
+
+  let result = shuffleArray.join("").slice(0, limit);
+
+  return result;
+}
+
+export  {
+  ShortIdx,
+  RandomIdx,
+  ShuffleX,
 };
-
-const RandomIdx: RandomGenerator = (limit = 11) => {
-  const character =
-    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
-  const myArray = Array.from(character);
-  let ctr = myArray.length;
-  let temp: string, index: number;
-
-  while (ctr > 0) {
-    index = Math.floor(Math.random() * ctr);
-    ctr--;
-    temp = myArray[ctr];
-    myArray[ctr] = myArray[index];
-    myArray[index] = temp;
-  }
-  return myArray.join("").slice(0, limit).toString();
-};
-
-export { ShortIdx, RandomIdx };
