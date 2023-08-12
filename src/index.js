@@ -5,13 +5,13 @@ function ShuffleX(arrayX, limit) {
   let temp;
   let index;
 
-  // While there are elements in the array
+  /* Mientras haya elementos en el array */
   while (ctr > 0) {
-    // Pick a random index
+    /* Elegimos un numero para el índice aleatorio */
     index = Math.floor(Math.random() * ctr);
-    // Decrease ctr by 1
+    /* Disminuimos ctr en 1 */
     ctr--;
-    // And swap the last element with it
+    /* E intercambiamos el último elemento con él. */
     temp = arrayX[ctr];
     arrayX[ctr] = arrayX[index];
     arrayX[index] = temp;
@@ -20,28 +20,29 @@ function ShuffleX(arrayX, limit) {
 }
 
 /* función con letras y números */
-function ShortIdx(limit = 7) {
+function ShortIdx(limit = 9) {
   const character =
     "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
-  let myArray = Array.from(character);
-
+  /* convertimos el string en array */
+  let myArray = [...character];
+  /* barajamos el array y lo guardamos en una variable */
   let shuffleArray = ShuffleX(myArray);
-
-  let result = shuffleArray.join("").slice(0, limit).toString();
+  /* agregamos el limite y lo volvemos como string */
+  let result = shuffleArray.slice(0, limit).join("");
 
   return result;
 }
 
 /* función con letras, números y símbolos */
-
-function RandomIdx(limit = 7) {
+function RandomIdx(limit = 9) {
   const character =
     "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
-  let myArray = Array.from(character);
-
+  /* convertimos el string en array */
+  let myArray = [...character];
+  /* barajamos el array y lo guardamos en una variable */
   let shuffleArray = ShuffleX(myArray);
-
-  let result = shuffleArray.join("").slice(0, limit).toString();
+  /* agregamos el limite y lo volvemos como string */
+  let result = shuffleArray.slice(0, limit).join("");
 
   return result;
 }

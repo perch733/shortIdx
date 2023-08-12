@@ -2,12 +2,12 @@
 
 ## Métodos / methods
 ```
-ShortIdx() , RandomIdx()
+ShortIdx() , RandomIdx(), ShuffleX()
 ```
 
 ## ShortIdx()
 
-Es una librería que genera id de manera aleatoria hecha en javascript, por defecto su longitud es de 9. / It is a library that generates id randomly made in javascript, by default its length is 9.
+Es una función que genera id de manera aleatoria hecha en javascript, por defecto su longitud es de 9. / It is a library that generates id randomly made in javascript, by default its length is 9.
 
 los caracteres usados son los siguientes / the characters used are the following
 
@@ -104,7 +104,7 @@ expectativas / expectations
 
 ## RandomIdx()
 
-Genera id de manera aleatoria hecha en javascript, por defecto su longitud es de 94. / Generate id randomly made in javascript, by default its length is 94.
+Genera id con símbolos mas complejos de manera aleatoria hecha en javascript, por defecto su longitud es de 9. / Generate id with more complex symbols randomly made in javascript, by default its length is 9.
 
 los caracteres usados son los siguientes / the characters used are the following
 
@@ -124,7 +124,7 @@ function App() {
 
   return (
     <>
-        <p>{RandomIdx())}</p>
+        <p>{RandomIdx()}</p>
     </>
   );
 }
@@ -138,7 +138,7 @@ expectativas / expectations
 - 8Z-@vkXcopYr7VI
 - N?[-1oxuhT-cIpz
 
-No se recomienda para su uso como generador de contraseñas, podrían no ser seguras / Not recommended for use as a password generator, they may not be secure
+Puedes usar como generador de contraseñas o tokens / You can use as a password or token generator
 
 expectativas / expectations
 
@@ -167,3 +167,59 @@ expectativas / expectations
 - &#8220;QD9{uk+N*RY<0p(&#8221;
 - &#8220;-28z5*0hv%3<sfU&#8221;
 - &#8220;o_KjwAti@q%ZzBk&#8221;
+
+## ShuffleX()
+
+Es una función que reordena los array de manera aleatoria. / It is a function that sorts arrays randomly.
+
+```
+ShuffleX(array, length: optional)
+```
+ En el parámetro array ponemos el array a barajar y el length (opcional) definimos la longitud de array a mostrar, por defecto se mostrara todos los elementos del array barajado. / In the array parameter we put the array to shuffle and the length (optional) we define the length of the array to show, by default all the elements of the shuffled array will be shown.
+
+```
+import { ShuffleX } from "npm-shortidx";
+
+const App = () => {
+
+  let numbers = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ];
+
+  return (
+    <>
+        {
+          console.log(ShuffleX(numbers))
+        }
+    </>
+  );
+}
+export default App;
+```
+
+expectativas / expectations
+
+```
+[ '2', '4', '8', '5', '1', '9', '7', '6', '3', '0' ]
+
+[ '0', '1', '4', '7', '5', '8', '9', '3', '6', '2' ]
+
+[ '8', '4', '1', '7', '5', '6', '9', '2', '3', '0' ]
+```
+
+## Cambiando los parámetros de longitud / Changing the length parameters
+
+Similar a la función anterior /
+Similar to the previous function
+
+```
+ShuffleX(numbers, 3)
+```
+
+expectativas / expectations
+
+```
+[ '3', '0', '6' ]
+
+[ '6', '5', '1' ]
+
+[ '5', '1', '4' ]
+```
