@@ -1,6 +1,6 @@
-"use strict";
 
-function ShuffleX(arrayX: any[], limit: number): any[] {
+/* function para barajar los arrays */
+export function ShuffleX(arrayX: any[], limit: number): any[] {
   let ctr = arrayX.length;
   let temp: any;
   let index: number;
@@ -19,7 +19,9 @@ function ShuffleX(arrayX: any[], limit: number): any[] {
   return arrayX.slice(0, limit);
 }
 
-function ShortIdx(limit: number = 7): string {
+
+/* function para generar id */
+export function ShortIdx(limit: number = 7): string {
   const character: string[] = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '-', '_' ];
 
   let shuffleArray = ShuffleX(character, limit);
@@ -29,7 +31,9 @@ function ShortIdx(limit: number = 7): string {
   return result;
 }
 
-function RandomIdx(limit: number = 7): string {
+
+/* function para generar id con símbolos util para contraseñas */
+export function RandomIdx(limit: number = 7): string {
   const character: string[] =[ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '-', '_', '!', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~' ];
 
   let shuffleArray = ShuffleX(character, limit);
@@ -39,8 +43,3 @@ function RandomIdx(limit: number = 7): string {
   return result;
 }
 
-export  {
-  ShortIdx,
-  RandomIdx,
-  ShuffleX,
-};

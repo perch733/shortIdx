@@ -1,10 +1,14 @@
 {
   "name": "npm-shortidx",
-  "version": "1.0.21",
+  "version": "1.0.23",
   "description": "Generador de Id aleatorios, Random Id Generator",
-  "main": "src/index.js",
+  "main": "dist-node/index.js",
+  "browser":"dist-browser/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-browser": "tsc src/index.ts --outDir dist-browser --module ES6",
+    "build-node": "tsc src/index.ts --outDir dist-node ",
+    "build": "npm run build-browser & npm run build-node"
   },
   "keywords": [
     "short",
@@ -17,7 +21,8 @@
     "shortid",
     "tinyid",
     "react",
-    "shuffleId"
+    "shuffleId",
+    "underscore"
   ],
   "author": "Percy Chuzon <contacto@percychuzon.com>",
   "license": "ISC",
@@ -31,5 +36,8 @@
   },
   "bugs": {
     "url": "https://github.com/perch33/shortIdx/issues"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
   }
 }
