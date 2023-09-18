@@ -1,45 +1,42 @@
-
-/* function para barajar los arrays */
-export function ShuffleX(arrayX: any[], limit: number): any[] {
-  let ctr = arrayX.length;
-  let temp: any;
-  let index: number;
-
-  // While there are elements in the array
-  while (ctr > 0) {
-    // Pick a random index
-    index = Math.floor(Math.random() * ctr);
-    // Decrease ctr by 1
-    ctr--;
-    // And swap the last element with it
-    temp = arrayX[ctr];
-    arrayX[ctr] = arrayX[index];
-    arrayX[index] = temp;
+// Función para barajar un array
+export function ShuffleX(array: any[]): any[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  return arrayX.slice(0, limit);
+  return shuffled;
 }
 
+// Función para validar el límite
+const validateLimit = (limit: number, maxLimit: number): void => {
+  if (limit < 1 || limit > maxLimit) {
+    throw new Error(`El límite debe estar entre 1 y ${maxLimit}`);
+  }
+};
 
-/* function para generar id */
+// Función interna para generar un identificador
+const generateId = (characters: string, limit: number = 7): string => {
+  const maxLimit = characters.length;
+
+  validateLimit(limit, maxLimit);
+
+  const charactersArray = characters.split("");
+  const shuffledArray = ShuffleX(charactersArray);
+
+  return shuffledArray.slice(0, limit).join("");
+};
+
+// Función para generar un identificador corto aleatorio
 export function ShortIdx(limit: number = 7): string {
-  const character: string[] = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '-', '_' ];
-
-  let shuffleArray = ShuffleX(character, limit);
-
-  let result = shuffleArray.join("").slice(0, limit);
-
-  return result;
+  const characterSet =
+    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
+  return generateId(characterSet, limit);
 }
 
-
-/* function para generar id con símbolos util para contraseñas */
+// Función para generar un identificador aleatorio
 export function RandomIdx(limit: number = 7): string {
-  const character: string[] =[ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '-', '_', '!', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~' ];
-
-  let shuffleArray = ShuffleX(character, limit);
-
-  let result = shuffleArray.join("").slice(0, limit);
-
-  return result;
+  const characterSet =
+    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
+  return generateId(characterSet, limit);
 }
-

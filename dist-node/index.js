@@ -1,40 +1,53 @@
 "use strict";
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RandomIdx = exports.ShortIdx = exports.ShuffleX = void 0;
-/* function para barajar los arrays */
-function ShuffleX(arrayX, limit) {
-    var ctr = arrayX.length;
-    var temp;
-    var index;
-    // While there are elements in the array
-    while (ctr > 0) {
-        // Pick a random index
-        index = Math.floor(Math.random() * ctr);
-        // Decrease ctr by 1
-        ctr--;
-        // And swap the last element with it
-        temp = arrayX[ctr];
-        arrayX[ctr] = arrayX[index];
-        arrayX[index] = temp;
+// Función para barajar un array
+var ShuffleX = function (array, limit) {
+    var _a;
+    var shuffled = __spreadArray([], array, true);
+    for (var i = shuffled.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        _a = [shuffled[j], shuffled[i]], shuffled[i] = _a[0], shuffled[j] = _a[1];
     }
-    return arrayX.slice(0, limit);
-}
+    validateLimit(limit, array.length);
+    return shuffled.slice(0, limit);
+};
 exports.ShuffleX = ShuffleX;
-/* function para generar id */
-function ShortIdx(limit) {
+// Función para validar el límite
+var validateLimit = function (limit, maxLimit) {
+    if (limit < 1 || limit > maxLimit) {
+        throw new Error("El l\u00EDmite debe estar entre 1 y ".concat(maxLimit));
+    }
+};
+// Función interna para generar un identificador
+var generateId = function (characters, limit) {
     if (limit === void 0) { limit = 7; }
-    var character = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '-', '_'];
-    var shuffleArray = ShuffleX(character, limit);
-    var result = shuffleArray.join("").slice(0, limit);
-    return result;
-}
+    var maxLimit = characters.length;
+    validateLimit(limit, maxLimit);
+    var charactersArray = characters.split("");
+    var shuffledArray = (0, exports.ShuffleX)(charactersArray, limit);
+    return shuffledArray.join("").slice(0, limit);
+};
+// Función para generar un identificador corto aleatorio
+var ShortIdx = function (limit) {
+    if (limit === void 0) { limit = 7; }
+    var characterSet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
+    return generateId(characterSet, limit);
+};
 exports.ShortIdx = ShortIdx;
-/* function para generar id con símbolos util para contraseñas */
-function RandomIdx(limit) {
+// Función para generar un identificador aleatorio
+var RandomIdx = function (limit) {
     if (limit === void 0) { limit = 7; }
-    var character = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '-', '_', '!', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~'];
-    var shuffleArray = ShuffleX(character, limit);
-    var result = shuffleArray.join("").slice(0, limit);
-    return result;
-}
+    var characterSet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
+    return generateId(characterSet, limit);
+};
 exports.RandomIdx = RandomIdx;

@@ -2,3 +2,4 @@
 .vscode/*
 /dist-browser
 /dist-browser
+/package-lock.json
