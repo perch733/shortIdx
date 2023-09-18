@@ -1,12 +1,13 @@
 // Función para barajar un array
-export function ShuffleX(array: any[]): any[] {
+export const ShuffleX = (array: any[], limit: number): any[] => {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  return shuffled;
-}
+  validateLimit(limit, array.length);
+  return shuffled.slice(0, limit);
+};
 
 // Función para validar el límite
 const validateLimit = (limit: number, maxLimit: number): void => {
@@ -22,21 +23,20 @@ const generateId = (characters: string, limit: number = 7): string => {
   validateLimit(limit, maxLimit);
 
   const charactersArray = characters.split("");
-  const shuffledArray = ShuffleX(charactersArray);
-
-  return shuffledArray.slice(0, limit).join("");
+  const shuffledArray = ShuffleX(charactersArray, limit);
+  return shuffledArray.join("").slice(0, limit);
 };
 
 // Función para generar un identificador corto aleatorio
-export function ShortIdx(limit: number = 7): string {
+export const ShortIdx = (limit: number = 7): string => {
   const characterSet =
     "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
   return generateId(characterSet, limit);
-}
+};
 
 // Función para generar un identificador aleatorio
-export function RandomIdx(limit: number = 7): string {
+export const RandomIdx = (limit: number = 7): string => {
   const characterSet =
     "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
   return generateId(characterSet, limit);
-}
+};

@@ -1,5 +1,5 @@
 /node_modules
 .vscode/*
 /dist-browser
-/dist-browser
+/dist-node
 /package-lock.json
