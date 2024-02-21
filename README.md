@@ -1,5 +1,14 @@
 # npm-shortidx
 
+## Install
+
+```
+npm i npm-shortidx
+```
+```
+yarn add npm-shortidx
+```
+
 ## Métodos / methods
 ```
 ShortIdx() , RandomIdx(), ShuffleX()
