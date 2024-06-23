@@ -1,12 +1,13 @@
 // Función para barajar un array
-export const ShuffleX = (array: any[], limit: number): any[] => {
+export const ShuffleX = (array: string[], limit?: number): any[] => {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  validateLimit(limit, array.length);
-  return shuffled.slice(0, limit);
+  const actualLimit = limit !== undefined ? limit : array.length;
+  validateLimit(actualLimit, array.length);
+  return shuffled.slice(0, actualLimit);
 };
 
 // Función para validar el límite
