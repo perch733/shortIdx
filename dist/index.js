@@ -16,6 +16,7 @@ const validateLimit = (limit, maxLimit) => {
     if (limit < 1 || limit > maxLimit) {
         throw new Error(`El límite debe estar entre 1 y ${maxLimit}`);
     }
+    return limit;
 };
 const generateId = (characters, limit = 7) => {
     const maxLimit = characters.length;

@@ -1,7 +1,7 @@
 {
   "name": "npm-shortidx",
-  "version": "1.0.30",
-  "description": "Generador de Id aleatorios, Random Id Generator",
+  "version": "1.0.31",
+  "description": "Generador aleatorio shuffle,Generador de Id aleatorios, Random Id Generator",
   "main": "dist-node/index-min.js",
   "browser": "dist-browser/index-min.js",
   "types": "dist/index.d.ts",

@@ -1,5 +1,5 @@
 // Función para barajar un array
-export const ShuffleX = (array: string[], limit?: number): any[] => {
+export const ShuffleX = (array: any[], limit?: number): any[] => {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -11,10 +11,11 @@ export const ShuffleX = (array: string[], limit?: number): any[] => {
 };
 
 // Función para validar el límite
-const validateLimit = (limit: number, maxLimit: number): void => {
+const validateLimit = (limit: number, maxLimit: number): number => {
   if (limit < 1 || limit > maxLimit) {
     throw new Error(`El límite debe estar entre 1 y ${maxLimit}`);
   }
+  return limit;
 };
 
 // Función interna para generar un identificador

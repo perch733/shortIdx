@@ -24,6 +24,7 @@ var validateLimit = function (limit, maxLimit) {
     if (limit < 1 || limit > maxLimit) {
         throw new Error("El l\u00EDmite debe estar entre 1 y ".concat(maxLimit));
     }
+    return limit;
 };
 // Función interna para generar un identificador
 var generateId = function (characters, limit) {
