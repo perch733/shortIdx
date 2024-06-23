@@ -1,15 +1,13 @@
 {
   "name": "npm-shortidx",
-  "version": "1.0.32",
-  "description": "Generador aleatorio shuffle,Generador de Id aleatorios, Random Id Generator",
-  "main": "dist-node/index-min.js",
-  "browser": "dist-browser/index-min.js",
-  "types": "dist/index.ts",
+  "version": "1.0.33",
+  "description": "Generador de Id aleatorios, Random Id Generator",
+  "main": "dist/index.min.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-browser": "tsc src/index.ts --outDir dist-browser --module ES6",
-    "build-node": "tsc src/index.ts --outDir dist-node",
-    "build": "npm run build-browser & npm run build-node"
+    "build": "tsc && terser dist/index.js -o dist/index.min.js --compress --mangle"
+
   },
   "keywords": [
     "short",
@@ -39,8 +37,9 @@
     "url": "https://github.com/perch33/shortIdx/issues"
   },
   "devDependencies": {
-    "@types/node": "^20.14.8",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.5.2"
+
+    "terser": "^5.31.1",
+    "typescript": "^5.2.2"
+
   }
 }

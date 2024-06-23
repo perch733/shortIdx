@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "module": "CommonJS",
-    "removeComments": true,
+    "module": "ESNext",
     "declaration": true,
-    "outDir": "./dist",
+    "removeComments": true,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist"
+
   },
   "include": ["src"],
   "exclude": ["node_modules"]
