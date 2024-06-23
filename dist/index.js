@@ -29,4 +29,3 @@ export const RandomIdx = (limit = 7) => {
     const characterSet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
     return generateId(characterSet, limit);
 };
-
