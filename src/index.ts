@@ -39,6 +39,6 @@ export const ShortIdx = (limit: number = 7): string => {
 // Función para generar un identificador aleatorio
 export const RandomIdx = (limit: number = 7): string => {
   const characterSet =
-    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
+    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_!#$%&'()*+,./:;<=>?@[]^`{|}~\"";
   return generateId(characterSet, limit);
 };
