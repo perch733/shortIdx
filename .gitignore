@@ -1,24 +1,24 @@
-# build output
-dist/
+# Salida de compilación
+/dist
 
-# generated types
-.astro/
+# Archivos de tipos (si no los deseas en control de versiones)
+*.d.ts
 
-# dependencies
+# Dependencias
 node_modules/
 
-# logs
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# environment variables
+# Variables de entorno
 .env
 .env.production
 
-# macOS-specific files
+# Archivos específicos de macOS
 .DS_Store
 
-# jetbrains setting folder
+# Archivos de configuración de JetBrains
 .idea/
