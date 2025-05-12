@@ -8,164 +8,180 @@
 - [Métodos](#métodos)
   - [ShortIdx](#shortidx)
   - [RandomIdx](#randomidx)
+  - [CustomIdx](#customidx)
+  - [RepeatIdx](#repeatidx)
   - [ShuffleX](#shufflex)
+  - [IndexShuffle](#indexshuffle)
+  - [ShuffleString](#shufflestring)
 - [Ejemplos](#ejemplos)
 - [Contribuciones](#contribuciones)
 - [Licencia](#licencia)
 
 ## Instalación 
 
-```
+```bash
 npm i npm-shortidx
 ```
-```
+```bash
 yarn add npm-shortidx
-```
-
-## Métodos / methods
-```
-ShortIdx() , RandomIdx(), ShuffleX()
 ```
 
 ## Métodos
 
+```ts
+ShortIdx() , RandomIdx(), CustomIdx(), RepeatIdx(), ShuffleX(), IndexShuffle(), ShuffleString()
+```
+
+---
+
 ### ShortIdx()
 
-Genera IDs aleatorios en JavaScript. Por defecto, su longitud es de 7 caracteres.
+Genera IDs aleatorios con caracteres alfanuméricos.
 
 **Caracteres usados**:
-
-
 ```
 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_
 ```
 
-
 **Uso**:
 
-```javascript
+```ts
 import { ShortIdx } from "npm-shortidx";
 
-console.log(ShortIdx()); // Ejemplo de salida: "wkezyUxsW"
+ShortIdx();         // "G7ksLzW"
+ShortIdx(12);       // "AdE8fsU1KqpQ"
 ```
-**Parámetros**:
 
-`limit` (opcional): Longitud del ID generado. Por defecto es 7.
+---
 
 ### RandomIdx()
 
-Genera IDs con símbolos más complejos de manera aleatoria. Por defecto, su longitud es de 7 caracteres.
+Genera IDs aleatorios que incluyen símbolos y caracteres especiales.
 
+**Caracteres usados**:
 ```
 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_!#$%&'()*+,./:;<=>?@[]^`{|}~\"
 ```
+
 **Uso**:
 
-```javascript
+```ts
 import { RandomIdx } from "npm-shortidx";
 
-console.log(RandomIdx()); // Ejemplo de salida: "<tU!xQNK|Y8;"
+RandomIdx();        // "s@L!z82_"
+RandomIdx(10);      // "*>d3@9x^Z!"
 ```
 
-**Parámetros**:
+---
 
-`limit` (opcional): Longitud del ID generado. Por defecto es 7.
+### CustomIdx()
+
+Genera un ID usando un conjunto de caracteres personalizado.
+
+```ts
+import { CustomIdx } from "npm-shortidx";
+
+CustomIdx("ABC123", 5); // "2B1AC"
+```
+
+---
+
+### RepeatIdx()
+
+Genera múltiples IDs de forma masiva.
+
+```ts
+import { RepeatIdx, ShortIdx } from "npm-shortidx";
+
+RepeatIdx(4, ShortIdx);        // ["R3f7tK1", "gTz1xL9", ...]
+RepeatIdx(3, RandomIdx, 10);   // ["<xD&0j9@#", "2K!lm8$@#", ...]
+```
+
+---
 
 ### ShuffleX()
 
-Reordena arrays de manera aleatoria.
+Reordena arrays de forma aleatoria.
 
-**Uso**:
-
-```javascript
+```ts
 import { ShuffleX } from "npm-shortidx";
 
-const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-console.log(ShuffleX(numbers)); // Ejemplo de salida: ['2', '4', '8', '5', '1', '9', '7', '6', '3', '0']
+const items = ['a', 'b', 'c', 'd'];
+ShuffleX(items);       // ['c', 'a', 'd', 'b']
+ShuffleX(items, 2);    // ['b', 'd']
 ```
 
-**Parámetros**:
+---
 
-`array`: El array a reordenar.
-`limit`: (opcional): Longitud del array reordenado a mostrar. Por defecto muestra todos los elementos.
+### IndexShuffle()
+
+Devuelve un array de índices aleatorios.
+
+```ts
+import { IndexShuffle } from "npm-shortidx";
+
+IndexShuffle(5);  // [2, 0, 4, 1, 3]
+```
+
+---
+
+### ShuffleString()
+
+Desordena los caracteres de un string.
+
+```ts
+import { ShuffleString } from "npm-shortidx";
+
+ShuffleString("abcdef"); // "ecdbfa"
+```
+
+---
 
 ## Ejemplos
-**ShortIdx en React**
 
-```javascript
+**Uso en React**
+
+```jsx
 import { ShortIdx } from "npm-shortidx";
 
 function App() {
   const letters = ["a", "b", "c", "d"];
-
   return (
     <>
       <p>{ShortIdx()}</p>
-      {letters.map((letter) => (
+      {letters.map(letter => (
         <p key={ShortIdx()}>{letter}</p>
       ))}
     </>
   );
 }
-
-export default App;
 ```
 
 **Cambiando la longitud del ID**
 
-```javascript
-import { ShortIdx } from "npm-shortidx";
-
-function App() {
-  return (
-    <>
-      <p>{ShortIdx(15)}</p>
-    </>
-  );
-}
-
-export default App;
-
+```ts
+ShortIdx(15); // "Kz83kJqsTg92Lm1"
 ```
 
-**Uso de RandomIdx**
+**Generando múltiples IDs**
 
-```javascript
-import { RandomIdx } from "npm-shortidx";
-
-function App() {
-  return (
-    <>
-      <p>{RandomIdx()}</p>
-    </>
-  );
-}
-
-export default App;
-
+```ts
+RepeatIdx(5, RandomIdx, 10); // ['@d8Lz!pZ3x', '29&Lk1@9Tq', ...]
 ```
 
-**Uso de ShuffleX**
+**Reordenando caracteres de un string**
 
-```javascript
-import { ShuffleX } from "npm-shortidx";
-
-const App = () => {
-  const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-
-  return (
-    <>
-      {console.log(ShuffleX(numbers))}
-    </>
-  );
-}
-export default App;
-
+```ts
+ShuffleString("hola mundo"); // "ouh nldma"
 ```
+
+---
 
 ## Contribuciones
+
 ¡Las contribuciones son bienvenidas! Siéntete libre de abrir un issue o enviar un pull request.
 
+---
 
 ## Licencia
 

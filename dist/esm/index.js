@@ -1,4 +1,6 @@
 export const ShuffleX = (array, limit) => {
+    if (!Array.isArray(array))
+        throw new TypeError("El parámetro debe ser un array");
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -28,4 +30,21 @@ export const ShortIdx = (limit = 7) => {
 export const RandomIdx = (limit = 7) => {
     const characterSet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_!#$%&'()*+,./:;<=>?@[]^`{|}~\"";
     return generateId(characterSet, limit);
+};
+export const RepeatIdx = (count, generator, limit) => {
+    if (count < 1)
+        throw new Error("El número de elementos debe ser mayor a 0");
+    return Array.from({ length: count }, () => generator(limit));
+};
+export const IndexShuffle = (length) => {
+    if (length < 1)
+        throw new Error("La longitud debe ser mayor a 0");
+    const indices = Array.from({ length }, (_, i) => i);
+    return ShuffleX(indices);
+};
+export const ShuffleString = (str) => {
+    return ShuffleX(str.split("")).join("");
+};
+export const CustomIdx = (characters, limit = 7) => {
+    return generateId(characters, limit);
 };
