@@ -1,6 +1,6 @@
 {
   "name": "npm-shortidx",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Generador de Id aleatorios, Random Id Generator",
   "main": "dist/cjs/index.min.js",
   "module": "dist/esm/index.min.js",
@@ -26,12 +26,26 @@
     "mongoid",
     "shortid",
     "tinyid",
-    "react",
     "shuffleId",
-    "underscore"
+    "underscore",
+    "tiny",
+    "id",
+    "ids",
+    "unique-id",
+    "random-id",
+    "identifier",
+    "short-id",
+    "nano-id",
+    "slug",
+    "slug-generator",
+    "hash",
+    "token",
+    "generator",
+    "hashid",
+    "url-shortener"
   ],
   "author": "Percy Chuzon <contacto@percychuzon.com>",
-  "license": "ISC",
+  "license": "MIT",
   "homepage": "https://shortidx.percychuzon.com/",
   "repository": {
     "type": "git",
@@ -44,7 +58,7 @@
     "url": "https://github.com/perch33/shortIdx/issues"
   },
   "devDependencies": {
-    "terser": "^5.39.0",
+    "terser": "^5.39.2",
     "typescript": "^5.8.3"
   }
 }
