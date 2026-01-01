@@ -2,6 +2,20 @@
 
 `npm-shortidx` es una librería para generar identificadores aleatorios cortos. Incluye funciones para generar IDs con diferentes conjuntos de caracteres y para reordenar arrays de manera aleatoria.
 
+> ⚠️ **Nota importante**
+>
+> Las funciones `ShortIdx`, `RandomIdx` y `CustomIdx` **NO están diseñadas para generar contraseñas**.
+>
+> Estas funciones deben usarse únicamente para:
+>
+> - Identificadores (IDs)
+> - Tokens temporales
+> - Hashes simples
+> - Keys de UI (React, Vue, etc.)
+> - Slugs o identificadores no críticos
+>
+> Para generación de contraseñas seguras, utiliza la función `PasswordGen`, que emplea una fuente de aleatoriedad criptográficamente segura.
+
 ## Tabla de Contenidos
 
 - [Instalación](#instalación)
@@ -13,23 +27,43 @@
   - [ShuffleX](#shufflex)
   - [IndexShuffle](#indexshuffle)
   - [ShuffleString](#shufflestring)
+  - [PasswordGen](#PasswordGen)
 - [Ejemplos](#ejemplos)
 - [Contribuciones](#contribuciones)
 - [Licencia](#licencia)
 
-## Instalación 
+## Instalación
 
 ```bash
 npm i npm-shortidx
 ```
+
 ```bash
 yarn add npm-shortidx
 ```
 
 ## Métodos
 
+### ⚠️ Seguridad y uso recomendado
+
+- `ShortIdx`, `RandomIdx` y `CustomIdx` **no usan aleatoriedad criptográficamente segura**.
+- No deben usarse para:
+  - Contraseñas
+  - Claves privadas
+  - Tokens de autenticación permanentes
+  - Datos sensibles
+
+Estas funciones están pensadas para **identificadores rápidos y ligeros**, no para seguridad.
+
 ```ts
-ShortIdx() , RandomIdx(), CustomIdx(), RepeatIdx(), ShuffleX(), IndexShuffle(), ShuffleString()
+ShortIdx(),
+  RandomIdx(),
+  CustomIdx(),
+  RepeatIdx(),
+  ShuffleX(),
+  IndexShuffle(),
+  ShuffleString(),
+  PasswordGen();
 ```
 
 ---
@@ -39,6 +73,7 @@ ShortIdx() , RandomIdx(), CustomIdx(), RepeatIdx(), ShuffleX(), IndexShuffle(), 
 Genera IDs aleatorios con caracteres alfanuméricos.
 
 **Caracteres usados**:
+
 ```
 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_
 ```
@@ -48,8 +83,8 @@ Genera IDs aleatorios con caracteres alfanuméricos.
 ```ts
 import { ShortIdx } from "npm-shortidx";
 
-ShortIdx();         // "G7ksLzW"
-ShortIdx(12);       // "AdE8fsU1KqpQ"
+ShortIdx(); // "G7ksLzW"
+ShortIdx(12); // "AdE8fsU1KqpQ"
 ```
 
 ---
@@ -59,6 +94,7 @@ ShortIdx(12);       // "AdE8fsU1KqpQ"
 Genera IDs aleatorios que incluyen símbolos y caracteres especiales.
 
 **Caracteres usados**:
+
 ```
 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_!#$%&'()*+,./:;<=>?@[]^`{|}~\"
 ```
@@ -68,8 +104,8 @@ Genera IDs aleatorios que incluyen símbolos y caracteres especiales.
 ```ts
 import { RandomIdx } from "npm-shortidx";
 
-RandomIdx();        // "s@L!z82_"
-RandomIdx(10);      // "*>d3@9x^Z!"
+RandomIdx(); // "s@L!z82_"
+RandomIdx(10); // "*>d3@9x^Z!"
 ```
 
 ---
@@ -93,8 +129,8 @@ Genera múltiples IDs de forma masiva.
 ```ts
 import { RepeatIdx, ShortIdx } from "npm-shortidx";
 
-RepeatIdx(4, ShortIdx);        // ["R3f7tK1", "gTz1xL9", ...]
-RepeatIdx(3, RandomIdx, 10);   // ["<xD&0j9@#", "2K!lm8$@#", ...]
+RepeatIdx(4, ShortIdx); // ["R3f7tK1", "gTz1xL9", ...]
+RepeatIdx(3, RandomIdx, 10); // ["<xD&0j9@#", "2K!lm8$@#", ...]
 ```
 
 ---
@@ -106,9 +142,9 @@ Reordena arrays de forma aleatoria.
 ```ts
 import { ShuffleX } from "npm-shortidx";
 
-const items = ['a', 'b', 'c', 'd'];
-ShuffleX(items);       // ['c', 'a', 'd', 'b']
-ShuffleX(items, 2);    // ['b', 'd']
+const items = ["a", "b", "c", "d"];
+ShuffleX(items); // ['c', 'a', 'd', 'b']
+ShuffleX(items, 2); // ['b', 'd']
 ```
 
 ---
@@ -120,7 +156,7 @@ Devuelve un array de índices aleatorios.
 ```ts
 import { IndexShuffle } from "npm-shortidx";
 
-IndexShuffle(5);  // [2, 0, 4, 1, 3]
+IndexShuffle(5); // [2, 0, 4, 1, 3]
 ```
 
 ---
@@ -134,6 +170,19 @@ import { ShuffleString } from "npm-shortidx";
 
 ShuffleString("abcdef"); // "ecdbfa"
 ```
+
+## ¿Qué función debo usar?
+
+| Caso de uso                       | Función         |
+| --------------------------------- | --------------- |
+| IDs cortos y ligeros              | `ShortIdx`      |
+| IDs con símbolos                  | `RandomIdx`     |
+| IDs con charset personalizado     | `CustomIdx`     |
+| Generar múltiples IDs             | `RepeatIdx`     |
+| Barajar arrays sin mutarlos       | `ShuffleX`      |
+| Obtener índices aleatorios        | `IndexShuffle`  |
+| Reordenar caracteres de un string | `ShuffleString` |
+| Generar contraseñas seguras       | `PasswordGen`   |
 
 ---
 
@@ -149,7 +198,7 @@ function App() {
   return (
     <>
       <p>{ShortIdx()}</p>
-      {letters.map(letter => (
+      {letters.map((letter) => (
         <p key={ShortIdx()}>{letter}</p>
       ))}
     </>
@@ -177,6 +226,44 @@ ShuffleString("hola mundo"); // "ouh nldma"
 
 ---
 
+### PasswordGen()
+
+Genera contraseñas aleatorias utilizando una fuente de aleatoriedad criptográficamente segura (`crypto.getRandomValues`).
+
+✅ **Uso recomendado**:
+
+- Contraseñas
+- Tokens de seguridad
+- Claves temporales sensibles
+
+❌ **No recomendado para**:
+
+- IDs visuales
+- Keys de UI
+- Slugs
+
+**Uso**:
+
+```ts
+import { PasswordGen } from "npm-shortidx";
+
+PasswordGen();
+// Ejemplo: "A9$kP2@Lm8#Qx1!Z"
+
+PasswordGen({
+  length: 24,
+});
+
+PasswordGen({
+  extraChars: "_-+=",
+});
+```
+
+PasswordGen está diseñada para seguridad.
+Usa esta función siempre que necesites una contraseña real.
+
+---
+
 ## Contribuciones
 
 ¡Las contribuciones son bienvenidas! Siéntete libre de abrir un issue o enviar un pull request.
@@ -186,3 +273,7 @@ ShuffleString("hola mundo"); // "ouh nldma"
 ## Licencia
 
 ### ISC
+
+```
+
+```

@@ -1,5 +1,9 @@
-// Función para barajar un array
-export const ShuffleX = (array: any[], limit?: number): any[] => {
+/**
+ * Baraja los elementos de un array de forma aleatoria.
+ * No muta el array original.
+ */
+
+export const ShuffleX = <T>(array: T[], limit?: number): T[] => {
   if (!Array.isArray(array))
     throw new TypeError("El parámetro debe ser un array");
   const shuffled = [...array];
@@ -31,43 +35,111 @@ const generateId = (characters: string, limit: number = 7): string => {
   return shuffledArray.join("").slice(0, limit);
 };
 
-// Función para generar un identificador corto aleatorio
+/**
+ * Función para generar un identificador aleatorio con caracteres alfanuméricos.
+ */
+
 export const ShortIdx = (limit: number = 7): string => {
   const characterSet =
     "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
   return generateId(characterSet, limit);
 };
 
-// Función para generar un identificador aleatorio
+/**
+ * Función para generar un identificador aleatorio que incluyen símbolos y caracteres especiales.
+ */
+
 export const RandomIdx = (limit: number = 7): string => {
   const characterSet =
     "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_!#$%&'()*+,./:;<=>?@[]^`{|}~\"";
   return generateId(characterSet, limit);
 };
 
-// 🔁 RepeatIdx: Genera múltiples IDs usando una función generadora
+/**
+ * 🔁 RepeatIdx: Genera múltiples IDs usando una función generadora
+ */
+
 export const RepeatIdx = (
   count: number,
   generator: (limit?: number) => string,
   limit?: number
 ): string[] => {
-  if (count < 1) throw new Error("El número de elementos debe ser mayor a 0");
+  if (!Number.isInteger(count) || count < 1) {
+    throw new Error("El número de elementos debe ser un entero mayor a 0");
+  }
+
   return Array.from({ length: count }, () => generator(limit));
 };
 
-// 🔢 IndexShuffle: Devuelve un array de índices aleatorios
+/**
+ * 🔢 IndexShuffle: Devuelve un array de índices aleatorios
+ */
+
 export const IndexShuffle = (length: number): number[] => {
   if (length < 1) throw new Error("La longitud debe ser mayor a 0");
   const indices = Array.from({ length }, (_, i) => i);
   return ShuffleX(indices);
 };
+/**
+ * 🔀 ShuffleString: Reordena aleatoriamente los caracteres de un string
+ */
 
-// 🔀 ShuffleString: Reordena aleatoriamente los caracteres de un string
 export const ShuffleString = (str: string): string => {
   return ShuffleX(str.split("")).join("");
 };
 
-// 🆔 CustomIdx: Generador con set de caracteres personalizado
+/**
+ * 🆔 CustomIdx: Generador con set de caracteres personalizado
+ */
+
 export const CustomIdx = (characters: string, limit: number = 7): string => {
   return generateId(characters, limit);
+};
+
+/**
+ * generador de contraseñas
+ */
+export type PasswordOptions = {
+  length?: number;
+  chars?: string; // charset base
+  extraChars?: string; // caracteres adicionales
+};
+
+const DEFAULT_CHARS =
+  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{};:,.?";
+
+/**
+ * Genera contraseñas aleatorias usando una fuente criptográficamente segura.
+ * No almacena ni cifra contraseñas.
+ */
+
+export const PasswordGen = ({
+  length = 16,
+  chars = DEFAULT_CHARS,
+  extraChars = "",
+}: PasswordOptions = {}): string => {
+  if (!Number.isInteger(length) || length < 1) {
+    throw new Error("La longitud debe ser un número entero mayor a 0");
+  }
+
+  if (typeof extraChars !== "string") {
+    throw new Error("extraChars debe ser un string");
+  }
+
+  if (typeof chars !== "string" || chars.length < 2) {
+    throw new Error("El charset debe tener al menos 2 caracteres");
+  }
+
+  const finalChars = Array.from(new Set(chars + extraChars)).join("");
+  if (finalChars.length < 2) {
+    throw new Error("El charset final debe tener al menos 2 caracteres");
+  }
+
+  const array = new Uint32Array(length);
+  crypto.getRandomValues(array);
+
+  return Array.from(
+    array,
+    (x: number) => finalChars[x % finalChars.length]
+  ).join("");
 };
