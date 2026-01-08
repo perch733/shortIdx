@@ -106,7 +106,7 @@ export type PasswordOptions = {
 };
 
 const DEFAULT_CHARS =
-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{};:,.?";
+  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 /**
  * Genera contraseñas aleatorias usando una fuente criptográficamente segura.

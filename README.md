@@ -242,6 +242,22 @@ Genera contraseñas aleatorias utilizando una fuente de aleatoriedad criptográf
 - Keys de UI
 - Slugs
 
+Por defecto, el generador utiliza únicamente letras ASCII:
+
+- a–z
+- A–Z
+
+Esto garantiza compatibilidad máxima con cualquier sistema.
+
+**Caracteres por defecto**:
+
+```
+abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+```
+
+Si necesitas números, símbolos o caracteres Unicode,
+agrégalos explícitamente mediante `extraChars` .
+
 **Uso**:
 
 ```ts
@@ -273,7 +289,3 @@ Usa esta función siempre que necesites una contraseña real.
 ## Licencia
 
 ### ISC
-
-```
-
-```
