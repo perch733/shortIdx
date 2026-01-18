@@ -8,13 +8,21 @@ exports.PasswordGen = exports.CustomIdx = exports.ShuffleString = exports.IndexS
 const ShuffleX = (array, limit) => {
     if (!Array.isArray(array))
         throw new TypeError("El parámetro debe ser un array");
+    const len = array.length;
+    const actualLimit = limit !== undefined ? limit : len;
+    // Optimización: si el array está vacío o limit es 0, devolver vacío
+    if (len === 0 || actualLimit === 0)
+        return [];
+    validateLimit(actualLimit, len);
     const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
+    // Algoritmo Fisher-Yates optimizado para resultados parciales
+    // Si necesitamos 'actualLimit' elementos, solo barajamos los primeros 'actualLimit'
+    for (let i = 0; i < actualLimit; i++) {
+        // Selección aleatoria desde el rango restante [i, len - 1]
+        const j = i + Math.floor(Math.random() * (len - i));
+        // Intercambio
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
-    const actualLimit = limit !== undefined ? limit : array.length;
-    validateLimit(actualLimit, array.length);
     return shuffled.slice(0, actualLimit);
 };
 exports.ShuffleX = ShuffleX;
@@ -27,11 +35,20 @@ const validateLimit = (limit, maxLimit) => {
 };
 // Función interna para generar un identificador
 const generateId = (characters, limit = 7) => {
-    const maxLimit = characters.length;
-    validateLimit(limit, maxLimit);
-    const charactersArray = characters.split("");
-    const shuffledArray = (0, exports.ShuffleX)(charactersArray, limit);
-    return shuffledArray.join("").slice(0, limit);
+    if (limit < 1) {
+        throw new Error("El límite debe ser mayor a 0");
+    }
+    if (characters.length < 2) {
+        throw new Error("El charset debe tener al menos 2 caracteres");
+    }
+    const array = new Uint32Array(limit);
+    crypto.getRandomValues(array);
+    let result = "";
+    const len = characters.length;
+    for (let i = 0; i < limit; i++) {
+        result += characters[array[i] % len];
+    }
+    return result;
 };
 /**
  * Función para generar un identificador aleatorio con caracteres alfanuméricos.
@@ -83,7 +100,7 @@ const CustomIdx = (characters, limit = 7) => {
     return generateId(characters, limit);
 };
 exports.CustomIdx = CustomIdx;
-const DEFAULT_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{};:,.?";
+const DEFAULT_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 /**
  * Genera contraseñas aleatorias usando una fuente criptográficamente segura.
  * No almacena ni cifra contraseñas.
@@ -99,11 +116,7 @@ const PasswordGen = ({ length = 16, chars = DEFAULT_CHARS, extraChars = "", } = 
         throw new Error("El charset debe tener al menos 2 caracteres");
     }
     const finalChars = Array.from(new Set(chars + extraChars)).join("");
-    if (finalChars.length < 2) {
-        throw new Error("El charset final debe tener al menos 2 caracteres");
-    }
-    const array = new Uint32Array(length);
-    crypto.getRandomValues(array);
-    return Array.from(array, (x) => finalChars[x % finalChars.length]).join("");
+    // generateId ya valida que el charset tenga >= 2 caracteres y limit >= 1
+    return generateId(finalChars, length);
 };
 exports.PasswordGen = PasswordGen;

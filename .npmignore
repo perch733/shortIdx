@@ -1,0 +1,18 @@
+# Ignorar tests y configuración de desarrollo
+test/
+src/
+tsconfig.json
+tsconfig.cjs.json
+tsconfig.esm.json
+.gitignore
+.trae/
+
+# Ignorar archivos de Git
+.git/
+.github/
+
+# Mantener solo dist y archivos meta
+!dist/
+!package.json
+!README.md
+!LICENSE.md

@@ -2,19 +2,11 @@
 
 `npm-shortidx` es una librería para generar identificadores aleatorios cortos. Incluye funciones para generar IDs con diferentes conjuntos de caracteres y para reordenar arrays de manera aleatoria.
 
-> ⚠️ **Nota importante**
+> ⚠️ **Nota de Versión 1.4.0**
 >
-> Las funciones `ShortIdx`, `RandomIdx` y `CustomIdx` **NO están diseñadas para generar contraseñas**.
+> A partir de la versión 1.4.0, todas las funciones de generación de IDs (`ShortIdx`, `RandomIdx`, etc.) utilizan `crypto.getRandomValues` para una aleatoriedad criptográficamente segura.
 >
-> Estas funciones deben usarse únicamente para:
->
-> - Identificadores (IDs)
-> - Tokens temporales
-> - Hashes simples
-> - Keys de UI (React, Vue, etc.)
-> - Slugs o identificadores no críticos
->
-> Para generación de contraseñas seguras, utiliza la función `PasswordGen`, que emplea una fuente de aleatoriedad criptográficamente segura.
+> Sin embargo, para contraseñas, seguimos recomendando usar `PasswordGen` ya que ofrece una API específica para configuración de seguridad.
 
 ## Tabla de Contenidos
 
@@ -44,16 +36,12 @@ yarn add npm-shortidx
 
 ## Métodos
 
-### ⚠️ Seguridad y uso recomendado
+### 🛡️ Seguridad
 
-- `ShortIdx`, `RandomIdx` y `CustomIdx` **no usan aleatoriedad criptográficamente segura**.
-- No deben usarse para:
-  - Contraseñas
-  - Claves privadas
-  - Tokens de autenticación permanentes
-  - Datos sensibles
+Desde la versión **1.4.0**, esta librería utiliza `crypto.getRandomValues` (Web Crypto API) internamente para todas las operaciones de aleatoriedad.
 
-Estas funciones están pensadas para **identificadores rápidos y ligeros**, no para seguridad.
+- **IDs Seguros**: `ShortIdx`, `RandomIdx` y `CustomIdx` generan identificadores con alta entropía y aleatoriedad criptográfica.
+- **Contraseñas**: `PasswordGen` está optimizada específicamente para generar contraseñas seguras.
 
 ```ts
 ShortIdx(),

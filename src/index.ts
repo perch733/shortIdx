@@ -6,13 +6,26 @@
 export const ShuffleX = <T>(array: T[], limit?: number): T[] => {
   if (!Array.isArray(array))
     throw new TypeError("El parámetro debe ser un array");
+
+  const len = array.length;
+  const actualLimit = limit !== undefined ? limit : len;
+
+  // Optimización: si el array está vacío o limit es 0, devolver vacío
+  if (len === 0 || actualLimit === 0) return [];
+
+  validateLimit(actualLimit, len);
+
   const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+
+  // Algoritmo Fisher-Yates optimizado para resultados parciales
+  // Si necesitamos 'actualLimit' elementos, solo barajamos los primeros 'actualLimit'
+  for (let i = 0; i < actualLimit; i++) {
+    // Selección aleatoria desde el rango restante [i, len - 1]
+    const j = i + Math.floor(Math.random() * (len - i));
+    // Intercambio
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  const actualLimit = limit !== undefined ? limit : array.length;
-  validateLimit(actualLimit, array.length);
+
   return shuffled.slice(0, actualLimit);
 };
 
@@ -26,13 +39,22 @@ const validateLimit = (limit: number, maxLimit: number): number => {
 
 // Función interna para generar un identificador
 const generateId = (characters: string, limit: number = 7): string => {
-  const maxLimit = characters.length;
+  if (limit < 1) {
+    throw new Error("El límite debe ser mayor a 0");
+  }
+  if (characters.length < 2) {
+    throw new Error("El charset debe tener al menos 2 caracteres");
+  }
 
-  validateLimit(limit, maxLimit);
+  const array = new Uint32Array(limit);
+  crypto.getRandomValues(array);
 
-  const charactersArray = characters.split("");
-  const shuffledArray = ShuffleX(charactersArray, limit);
-  return shuffledArray.join("").slice(0, limit);
+  let result = "";
+  const len = characters.length;
+  for (let i = 0; i < limit; i++) {
+    result += characters[array[i] % len];
+  }
+  return result;
 };
 
 /**
@@ -131,15 +153,6 @@ export const PasswordGen = ({
   }
 
   const finalChars = Array.from(new Set(chars + extraChars)).join("");
-  if (finalChars.length < 2) {
-    throw new Error("El charset final debe tener al menos 2 caracteres");
-  }
-
-  const array = new Uint32Array(length);
-  crypto.getRandomValues(array);
-
-  return Array.from(
-    array,
-    (x: number) => finalChars[x % finalChars.length]
-  ).join("");
+  // generateId ya valida que el charset tenga >= 2 caracteres y limit >= 1
+  return generateId(finalChars, length);
 };
