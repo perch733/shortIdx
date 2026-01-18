@@ -252,7 +252,12 @@ agrégalos explícitamente mediante `extraChars` .
 import { PasswordGen } from "npm-shortidx";
 
 PasswordGen();
-// Ejemplo: "A9$kP2@Lm8#Qx1!Z"
+// Ejemplo: "A9kP2Lm8Qx1Z" (Alfanumérico por defecto)
+
+PasswordGen({
+  extraChars: "!@#$%"
+});
+// Ejemplo con símbolos: "A9$kP2@Lm8#Qx1!Z"
 
 PasswordGen({
   length: 24,
@@ -276,4 +281,4 @@ Usa esta función siempre que necesites una contraseña real.
 
 ## Licencia
 
-### ISC
+### MIT

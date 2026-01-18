@@ -67,4 +67,13 @@ describe('npm-shortidx Tests', () => {
       // Check that it throws on invalid input (delegated to generateId)
       assert.throws(() => PasswordGen({ chars: 'A' }), /charset/);
   });
+
+  it('PasswordGen should include numbers by default', () => {
+    // Generate a long password to ensure we likely get a number
+    const pass = PasswordGen({ length: 100 });
+    const hasNumber = /[0-9]/.test(pass);
+    const hasLetter = /[a-zA-Z]/.test(pass);
+    assert.ok(hasNumber, 'Should contain numbers by default');
+    assert.ok(hasLetter, 'Should contain letters by default');
+  });
 });

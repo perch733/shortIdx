@@ -1,10 +1,20 @@
 "use strict";
-/**
- * Baraja los elementos de un array de forma aleatoria.
- * No muta el array original.
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PasswordGen = exports.CustomIdx = exports.ShuffleString = exports.IndexShuffle = exports.RepeatIdx = exports.RandomIdx = exports.ShortIdx = exports.ShuffleX = void 0;
+/**
+ * Baraja los elementos de un array de forma aleatoria usando el algoritmo Fisher-Yates.
+ * No muta el array original, devuelve una nueva copia.
+ *
+ * @template T - El tipo de elementos en el array.
+ * @param {T[]} array - El array original a barajar.
+ * @param {number} [limit] - Opcional. Número máximo de elementos a devolver.
+ * @returns {T[]} Un nuevo array con los elementos barajados.
+ *
+ * @example
+ * const nums = [1, 2, 3, 4, 5];
+ * const shuffled = ShuffleX(nums); // [3, 1, 5, 2, 4] (aleatorio)
+ * const picked = ShuffleX(nums, 2); // [5, 1] (solo 2 elementos)
+ */
 const ShuffleX = (array, limit) => {
     if (!Array.isArray(array))
         throw new TypeError("El parámetro debe ser un array");
@@ -41,17 +51,43 @@ const generateId = (characters, limit = 7) => {
     if (characters.length < 2) {
         throw new Error("El charset debe tener al menos 2 caracteres");
     }
-    const array = new Uint32Array(limit);
-    crypto.getRandomValues(array);
-    let result = "";
     const len = characters.length;
-    for (let i = 0; i < limit; i++) {
-        result += characters[array[i] % len];
+    // Calculamos el límite para evitar el sesgo de módulo (modulo bias)
+    // Rechazamos valores que caigan en el rango sobrante del espacio de 32 bits
+    const maxUint32 = 0xffffffff;
+    const rangeLimit = maxUint32 - (maxUint32 % len);
+    let result = "";
+    while (result.length < limit) {
+        // Pedimos la cantidad necesaria de valores aleatorios
+        // En la mayoría de los casos, la tasa de rechazo es infinitesimal
+        const bufferSize = limit - result.length;
+        const array = new Uint32Array(bufferSize);
+        crypto.getRandomValues(array);
+        for (let i = 0; i < bufferSize; i++) {
+            if (result.length === limit)
+                break;
+            const val = array[i];
+            // Si el valor está dentro del rango seguro, lo usamos
+            if (val < rangeLimit) {
+                result += characters[val % len];
+            }
+            // Si no, lo descartamos (rejection sampling) y el bucle while se encargará de rellenar
+        }
     }
     return result;
 };
 /**
  * Función para generar un identificador aleatorio con caracteres alfanuméricos.
+ * Ideal para IDs de base de datos, URLs cortas, etc.
+ *
+ * Caracteres: a-z, A-Z, 0-9, -, _
+ *
+ * @param {number} [limit=7] - La longitud del ID generado.
+ * @returns {string} El ID aleatorio generado.
+ *
+ * @example
+ * ShortIdx(); // "xK9_m2P"
+ * ShortIdx(10); // "9_m2PxK9aB"
  */
 const ShortIdx = (limit = 7) => {
     const characterSet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
@@ -60,6 +96,14 @@ const ShortIdx = (limit = 7) => {
 exports.ShortIdx = ShortIdx;
 /**
  * Función para generar un identificador aleatorio que incluyen símbolos y caracteres especiales.
+ * Mayor entropía que ShortIdx debido a un charset más grande.
+ *
+ * @param {number} [limit=7] - La longitud del ID generado.
+ * @returns {string} El ID aleatorio generado.
+ *
+ * @example
+ * RandomIdx(); // "xK9!m2P"
+ * RandomIdx(12); // "9_m2PxK9!@#$"
  */
 const RandomIdx = (limit = 7) => {
     const characterSet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_!#$%&'()*+,./:;<=>?@[]^`{|}~\"";
@@ -67,7 +111,17 @@ const RandomIdx = (limit = 7) => {
 };
 exports.RandomIdx = RandomIdx;
 /**
- * 🔁 RepeatIdx: Genera múltiples IDs usando una función generadora
+ * 🔁 RepeatIdx: Genera múltiples IDs usando una función generadora.
+ * Útil para crear datos de prueba (mock data) o generar lotes de claves.
+ *
+ * @param {number} count - Cantidad de IDs a generar.
+ * @param {Function} generator - La función generadora a usar (ej. ShortIdx, RandomIdx).
+ * @param {number} [limit] - Opcional. Longitud de cada ID individual.
+ * @returns {string[]} Array con los IDs generados.
+ *
+ * @example
+ * RepeatIdx(3, ShortIdx); // ["aB1", "cD2", "eF3"]
+ * RepeatIdx(2, RandomIdx, 10); // ["aB1!cD2@eF", "3#gH4$iJ5%"]
  */
 const RepeatIdx = (count, generator, limit) => {
     if (!Number.isInteger(count) || count < 1) {
@@ -94,16 +148,26 @@ const ShuffleString = (str) => {
 };
 exports.ShuffleString = ShuffleString;
 /**
- * 🆔 CustomIdx: Generador con set de caracteres personalizado
+ * 🆔 CustomIdx: Generador con set de caracteres personalizado.
+ * Permite definir exactamente qué caracteres pueden aparecer en el ID.
+ *
+ * @param {string} characters - String con todos los caracteres permitidos.
+ * @param {number} [limit=7] - Longitud del ID.
+ * @returns {string} ID generado usando solo los caracteres provistos.
+ *
+ * @example
+ * CustomIdx("01", 8); // "10110010" (Binario aleatorio)
+ * CustomIdx("ABC", 4); // "BACA"
  */
 const CustomIdx = (characters, limit = 7) => {
     return generateId(characters, limit);
 };
 exports.CustomIdx = CustomIdx;
-const DEFAULT_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const DEFAULT_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 /**
  * Genera contraseñas aleatorias usando una fuente criptográficamente segura.
  * No almacena ni cifra contraseñas.
+ * Por defecto incluye letras (mayúsculas y minúsculas) y números.
  */
 const PasswordGen = ({ length = 16, chars = DEFAULT_CHARS, extraChars = "", } = {}) => {
     if (!Number.isInteger(length) || length < 1) {
